@@ -1,3 +1,9 @@
+#Google Map Key
+TeamC/app/src/debug/res/values/google_maps_api.xml
+
+#ignore .DS_Store
+.DS_Store
+
 # Built application files
 *.apk
 *.ap_
