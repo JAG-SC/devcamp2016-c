@@ -2,6 +2,11 @@ package example.com.teamc;
 
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.widget.Toast;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -9,10 +14,16 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
+
 
 public class MainActivity extends FragmentActivity implements OnMapReadyCallback {
 
+    static String str;
     private GoogleMap mMap;
+
+    private TextView hpText;    //プレイヤーHP表示
+    private boolean flag = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,9 +33,43 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        // load Player
+        ImageView imageView1 = (ImageView)findViewById(R.id.image_player);
+        imageView1.setImageResource(R.drawable.player_figure);
+
+        // Buttons
+        Button firstChoiceButton = (Button)findViewById(R.id.first_choice_button);
+        Button secondChoiceButton = (Button)findViewById(R.id.second_choice_button);
+        Button thirdChoiceButton = (Button)findViewById(R.id.third_choice_button);
+
+        // TextView
+        // HP Text
+        hpText = (TextView) findViewById(R.id.hp_text);
+
+        // リスナーをボタンに登録
+        firstChoiceButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        secondChoiceButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        thirdChoiceButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
-
-
+    
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
@@ -38,9 +83,25 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
+        mMap.setOnMapClickListener(new OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
+                //Toast.makeText(getApplicationContext(), "タップ位置\n緯度：" + latLng.latitude + "\n経度:" + latLng.longitude, Toast.LENGTH_LONG).show();
+
+                // Add a marker in Sydney and move the camera
+                LatLng sydney = new LatLng(latLng.latitude, latLng.longitude);
+                mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+                mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+
+                EkispertWrapper ek = new EkispertWrapper();
+                ek.execute();
+
+            }
+        });
+
         // Add a marker in Sydney and move the camera
         LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+        // mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
     }
 }
