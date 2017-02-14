@@ -13,10 +13,16 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
+
 
 public class MainActivity extends FragmentActivity implements OnMapReadyCallback {
 
+    static String str;
     private GoogleMap mMap;
+    private TextView hpText;    //プレイヤーHP表示
+    private boolean flag = false;
+
     private TextView hpText;    //プレイヤーHP表示
     private boolean flag = false;
 
@@ -77,6 +83,22 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+
+        mMap.setOnMapClickListener(new OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
+                //Toast.makeText(getApplicationContext(), "タップ位置\n緯度：" + latLng.latitude + "\n経度:" + latLng.longitude, Toast.LENGTH_LONG).show();
+
+                // Add a marker in Sydney and move the camera
+                LatLng sydney = new LatLng(latLng.latitude, latLng.longitude);
+                mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+                mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+
+                EkispertWrapper ek = new EkispertWrapper();
+                ek.execute();
+
+            }
+        });
 
         // Add a marker in Sydney and move the camera
         LatLng sydney = new LatLng(-34, 151);
