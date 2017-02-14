@@ -1,12 +1,15 @@
 package example.com.teamc;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -41,15 +44,24 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private float lon;
     private float lat;
     private LatLng latlng;
-    private int i;
-    private int j;
-    private int l;
     private int k;//検索結果のヒット数
-    private int stock[] = new int[3];
-    private boolean flag;
-
+    
     private void updateHpTextView() {
-        hpText.setText(String.valueOf(hp));
+        if (hp <= 0) {
+            new AlertDialog.Builder(this)
+                    .setTitle("ゲームオーバー")
+                    .setMessage("あなたは東京の闇に飲まれました……。\nアプリを終了します。")
+                    .setPositiveButton("さようなら", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Toast.makeText(MainActivity.this, "バイバイ", Toast.LENGTH_LONG).show();
+                            finish();
+                        }
+                    })
+                    .show();
+        } else {
+            hpText.setText(String.valueOf(hp));
+        }
     }
 
     @Override
