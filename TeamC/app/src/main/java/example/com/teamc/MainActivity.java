@@ -1,39 +1,37 @@
 package example.com.teamc;
 
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
-import com.google.android.gms.wallet.firstparty.GetBuyFlowInitializationTokenResponse;
-
-import example.com.teamc.resp.Range;
-import example.com.teamc.resp.StationResp;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import example.com.teamc.resp.Range;
+import example.com.teamc.resp.StationResp;
 
-public class MainActivity extends FragmentActivity implements OnMapReadyCallback {
+
+public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     static String str;
     private GoogleMap mMap;
 
     private TextView hpText;    //プレイヤーHP表示
-    private int hp=100;
-    private String cityname="東京";
+    private int hp = 100;
+    private String cityname = "東京";
     private Button firstChoiceButton;
     private Button secondChoiceButton;
     private Button thirdChoiceButton;
@@ -47,7 +45,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     private int j;
     private int l;
     private int k;//検索結果のヒット数
-    private int stock[]= new int[3];
+    private int stock[] = new int[3];
     private boolean flag;
 
     @Override
@@ -60,19 +58,18 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
 
         // load Player
-        ImageView imageView1 = (ImageView)findViewById(R.id.image_player);
+        ImageView imageView1 = (ImageView) findViewById(R.id.image_player);
         imageView1.setImageResource(R.drawable.player_figure);
 
         // Buttons
-        firstChoiceButton = (Button)findViewById(R.id.first_choice_button);
-        secondChoiceButton = (Button)findViewById(R.id.second_choice_button);
-        thirdChoiceButton = (Button)findViewById(R.id.third_choice_button);
+        firstChoiceButton = (Button) findViewById(R.id.first_choice_button);
+        secondChoiceButton = (Button) findViewById(R.id.second_choice_button);
+        thirdChoiceButton = (Button) findViewById(R.id.third_choice_button);
 
         // TextView
         // HP Text
         hpText = (TextView) findViewById(R.id.hp_text);
         hpText.setText(String.valueOf(hp));
-
 
 
         EkiSpertCommunitator communitator = new EkiSpertCommunitator(MainActivity.this);
@@ -81,12 +78,12 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             public void onResponse(Range range) {
                 //Toast.makeText(MainActivity.this, "" + range.ResultSet.Point[0].Station.Name, Toast.LENGTH_LONG).show(); // <- ここは用途によって変えてください
                 //1～3のボタンに取得した都市名を代入
-                k= range.ResultSet.Point.length;
+                k = range.ResultSet.Point.length;
 
                 List<Integer> ijl = new ArrayList<Integer>();
-                while ( ijl.size() < 3 ){
+                while (ijl.size() < 3) {
                     int tmp = new Random().nextInt(k);
-                    if(!ijl.contains(tmp)){
+                    if (!ijl.contains(tmp)) {
                         ijl.add(tmp);
                     }
                 }
@@ -97,10 +94,10 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                 citycode1 = Integer.valueOf(range.ResultSet.Point[i].Station.code);
 
                 secondChoiceButton.setText(range.ResultSet.Point[j].Station.Name);
-                citycode2=Integer.valueOf(range.ResultSet.Point[j].Station.code);
+                citycode2 = Integer.valueOf(range.ResultSet.Point[j].Station.code);
 
                 thirdChoiceButton.setText(range.ResultSet.Point[l].Station.Name);
-                citycode3=Integer.valueOf(range.ResultSet.Point[l].Station.code);
+                citycode3 = Integer.valueOf(range.ResultSet.Point[l].Station.code);
             }
 
             @Override
@@ -109,7 +106,6 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             }
 
         });
-
 
 
         // リスナーをボタンに登録
@@ -127,9 +123,9 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                         //緯度と経度を取得
                         lat = Float.valueOf(station.ResultSet.Point.GeoPoint.lati_d);
                         lon = Float.valueOf(station.ResultSet.Point.GeoPoint.longi_d);
-                        latlng = new LatLng(lat,lon);
+                        latlng = new LatLng(lat, lon);
                         //マップの移動
-                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latlng,13));
+                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latlng, 13));
                     }
 
                     @Override
@@ -144,12 +140,12 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                     public void onResponse(Range range) {
                         //Toast.makeText(MainActivity.this, "" + range.ResultSet.Point[0].Station.Name, Toast.LENGTH_LONG).show(); // <- ここは用途によって変えてください
                         //1～3のボタンに取得した都市名を代入
-                        k= range.ResultSet.Point.length;
+                        k = range.ResultSet.Point.length;
 
                         List<Integer> ijl = new ArrayList<Integer>();
-                        while ( ijl.size() < 3 ){
+                        while (ijl.size() < 3) {
                             int tmp = new Random().nextInt(k);
-                            if(!ijl.contains(tmp)){
+                            if (!ijl.contains(tmp)) {
                                 ijl.add(tmp);
                             }
                         }
@@ -160,10 +156,10 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                         citycode1 = Integer.valueOf(range.ResultSet.Point[i].Station.code);
 
                         secondChoiceButton.setText(range.ResultSet.Point[j].Station.Name);
-                        citycode2=Integer.valueOf(range.ResultSet.Point[j].Station.code);
+                        citycode2 = Integer.valueOf(range.ResultSet.Point[j].Station.code);
 
                         thirdChoiceButton.setText(range.ResultSet.Point[l].Station.Name);
-                        citycode3=Integer.valueOf(range.ResultSet.Point[l].Station.code);
+                        citycode3 = Integer.valueOf(range.ResultSet.Point[l].Station.code);
                     }
 
                     @Override
@@ -174,7 +170,6 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                 });
             }
         });
-
 
 
         secondChoiceButton.setOnClickListener(new View.OnClickListener() {
@@ -191,9 +186,9 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                         //緯度と経度を取得
                         lat = Float.valueOf(station.ResultSet.Point.GeoPoint.lati_d);
                         lon = Float.valueOf(station.ResultSet.Point.GeoPoint.longi_d);
-                        latlng = new LatLng(lat,lon);
+                        latlng = new LatLng(lat, lon);
                         //マップの移動
-                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latlng,13));
+                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latlng, 13));
                     }
 
                     @Override
@@ -208,12 +203,12 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                     public void onResponse(Range range) {
                         //Toast.makeText(MainActivity.this, "" + range.ResultSet.Point[0].Station.Name, Toast.LENGTH_LONG).show(); // <- ここは用途によって変えてください
                         //1～3のボタンに取得した都市名を代入
-                        k= range.ResultSet.Point.length;
+                        k = range.ResultSet.Point.length;
 
                         List<Integer> ijl = new ArrayList<Integer>();
-                        while ( ijl.size() < 3 ){
+                        while (ijl.size() < 3) {
                             int tmp = new Random().nextInt(k);
-                            if(!ijl.contains(tmp)){
+                            if (!ijl.contains(tmp)) {
                                 ijl.add(tmp);
                             }
                         }
@@ -224,10 +219,10 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                         citycode1 = Integer.valueOf(range.ResultSet.Point[i].Station.code);
 
                         secondChoiceButton.setText(range.ResultSet.Point[j].Station.Name);
-                        citycode2=Integer.valueOf(range.ResultSet.Point[j].Station.code);
+                        citycode2 = Integer.valueOf(range.ResultSet.Point[j].Station.code);
 
                         thirdChoiceButton.setText(range.ResultSet.Point[l].Station.Name);
-                        citycode3=Integer.valueOf(range.ResultSet.Point[l].Station.code);
+                        citycode3 = Integer.valueOf(range.ResultSet.Point[l].Station.code);
                     }
 
                     @Override
@@ -254,9 +249,9 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                         //緯度と経度を取得
                         lat = Float.valueOf(station.ResultSet.Point.GeoPoint.lati_d);
                         lon = Float.valueOf(station.ResultSet.Point.GeoPoint.longi_d);
-                        latlng = new LatLng(lat,lon);
+                        latlng = new LatLng(lat, lon);
                         //マップの移動
-                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latlng,13));
+                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latlng, 13));
                     }
 
                     @Override
@@ -271,12 +266,12 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                     public void onResponse(Range range) {
                         //Toast.makeText(MainActivity.this, "" + range.ResultSet.Point[0].Station.Name, Toast.LENGTH_LONG).show(); // <- ここは用途によって変えてください
                         //1～3のボタンに取得した都市名を代入
-                        k= range.ResultSet.Point.length;
+                        k = range.ResultSet.Point.length;
 
                         List<Integer> ijl = new ArrayList<Integer>();
-                        while ( ijl.size() < 3 ){
+                        while (ijl.size() < 3) {
                             int tmp = new Random().nextInt(k);
-                            if(!ijl.contains(tmp)){
+                            if (!ijl.contains(tmp)) {
                                 ijl.add(tmp);
                             }
                         }
@@ -288,10 +283,10 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                         citycode1 = Integer.valueOf(range.ResultSet.Point[i].Station.code);
 
                         secondChoiceButton.setText(range.ResultSet.Point[j].Station.Name);
-                        citycode2=Integer.valueOf(range.ResultSet.Point[j].Station.code);
+                        citycode2 = Integer.valueOf(range.ResultSet.Point[j].Station.code);
 
                         thirdChoiceButton.setText(range.ResultSet.Point[l].Station.Name);
-                        citycode3=Integer.valueOf(range.ResultSet.Point[l].Station.code);
+                        citycode3 = Integer.valueOf(range.ResultSet.Point[l].Station.code);
                     }
 
                     @Override
@@ -338,9 +333,9 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         // Add a marker in Sydney and move the camera
         //LatLng sydney = new LatLng(-34, 151);
         //tokyoの座標　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
-        latlng = new LatLng(35.678083,139.770444);
+        latlng = new LatLng(35.678083, 139.770444);
         // mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
         //mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latlng,13));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latlng, 13));
     }
 }
