@@ -82,7 +82,7 @@ public class HitPointEvent {
             ll.addView(img);
 
             Dialog dialog = new AlertDialog.Builder(getActivity())
-                    //.setPositiveButton("O.K.", null)
+                    .setPositiveButton("O.K.", null)
                     //.setNegativeButton("Cancel", null)
                     .setTitle("イベント発生：" + title)
                     //.setMessage(message)
