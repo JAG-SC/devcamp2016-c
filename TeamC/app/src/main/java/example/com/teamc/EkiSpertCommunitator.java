@@ -71,8 +71,8 @@ public class EkiSpertCommunitator {
 
     private interface EkiSpertService {
         @GET("range")
-        public Call<Range> range(@Query("key") String key, @Query("upperLimit") int upperLimit,
-                                 @Query("name") String name, @Query("limit") int limit);
+        Call<Range> range(@Query("key") String key, @Query("upperLimit") int upperLimit,
+                          @Query("name") String name, @Query("limit") int limit);
 
         @GET("course/plain")
         Call<Range> course_plain(@Query("key") String key, @Query("from") String from, @Query("to") String to);
