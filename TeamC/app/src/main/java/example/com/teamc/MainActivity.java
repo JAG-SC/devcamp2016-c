@@ -20,8 +20,6 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
     static String str;
     private GoogleMap mMap;
-    private TextView hpText;    //プレイヤーHP表示
-    private boolean flag = false;
 
     private TextView hpText;    //プレイヤーHP表示
     private boolean flag = false;
