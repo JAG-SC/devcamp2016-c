@@ -1,4 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
+    tools:context="example.com.teamc.MainActivity">
 
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:map="http://schemas.android.com/apk/res-auto"
@@ -7,12 +18,48 @@
     android:name="com.google.android.gms.maps.SupportMapFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="example.com.teamc.MainActivity">
+    tools:context="example.com.teamc.MainActivity"
+    tools:layout="@layout/activity_main"/>
 
     <ImageView
-    android:id="@+id/image_player"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:scaleType="center" />
+        android:id="@+id/image_player"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="center" />
 
-    </fragment>
+    <TextView
+        android:id="@+id/hp_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="32sp"
+        android:text="HP"
+        android:scaleType="center"/>
+
+    <Button
+        android:id="@+id/first_choice_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="(駅候補1の名前をここへ)"
+        android:alpha="0.5"
+        android:scaleType="center" />
+
+    <Button
+        android:id="@+id/second_choice_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="90dp"
+        android:text="(駅候補2の名前をここへ)"
+        android:alpha="0.5"
+        android:scaleType="center" />
+
+    <Button
+        android:id="@+id/third_choice_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="130dp"
+        android:text="(駅候補3の名前をここへ)"
+        android:alpha="0.5"
+        android:scaleType="center" />
+
+</RelativeLayout>

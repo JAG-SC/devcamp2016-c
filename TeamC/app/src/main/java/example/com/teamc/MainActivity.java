@@ -2,7 +2,10 @@ package example.com.teamc;
 
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -14,6 +17,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class MainActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
+    private TextView hpText;    //プレイヤーHP表示
+    private boolean flag = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,9 +32,39 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         // load Player
         ImageView imageView1 = (ImageView)findViewById(R.id.image_player);
         imageView1.setImageResource(R.drawable.player_figure);
+
+        // Buttons
+        Button firstChoiceButton = (Button)findViewById(R.id.first_choice_button);
+        Button secondChoiceButton = (Button)findViewById(R.id.second_choice_button);
+        Button thirdChoiceButton = (Button)findViewById(R.id.third_choice_button);
+
+        // TextView
+        // HP Text
+        hpText = (TextView) findViewById(R.id.hp_text);
+
+        // リスナーをボタンに登録
+        firstChoiceButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        secondChoiceButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        thirdChoiceButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
-
-
+    
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
