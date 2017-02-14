@@ -6,28 +6,27 @@ package example.com.teamc.resp;
 
 public class Range {
     ResultSet ResultSet;
-    Point[] Point;
-
+    
     class ResultSet {
-    }
+        Point[] Point;
 
-    class Point {
-        int Minute;
-        Prefecture Prefecture;
+        class Point {
+            int Minute;
+            Prefecture Prefecture;
 
-        class Prefecture {
-            String Name;
-            String code;
+            class Prefecture {
+                String Name;
+                String code;
+            }
+
+            Station Station;
+
+            class Station {
+                String Name;
+                String Type;
+                String code;
+            }
+
         }
-
-        Station Station;
-
-        class Station {
-            String Name;
-            String Type;
-            String code;
-        }
-
     }
-
 }
