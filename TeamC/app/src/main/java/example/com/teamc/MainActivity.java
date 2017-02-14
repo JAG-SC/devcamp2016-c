@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private GoogleMap mMap;
 
     private TextView hpText;    //プレイヤーHP表示
-    private int hp = 100;
+    private int hp = 50;
     private String cityname = "東京";
     private Button firstChoiceButton;
     private Button secondChoiceButton;
