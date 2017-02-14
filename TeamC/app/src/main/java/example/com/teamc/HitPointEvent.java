@@ -16,6 +16,8 @@ import android.widget.TextView;
 import java.io.Serializable;
 import java.util.Random;
 
+import example.com.teamc.resp.StationResp;
+
 /**
  * Created by ayijk on 2017/02/14.
  */
@@ -44,12 +46,12 @@ public class HitPointEvent {
             new Event("通勤ラッシュで座れた", 10, R.mipmap.train_people),
     };
 
-    public static int eventOccurs(String stationName, AppCompatActivity activity) {
-        Event ret = events[new Random().nextInt(events.length)];
+    public static int eventOccurs(StationResp.ResultSet.Point.Station station, AppCompatActivity activity) {
+        Event ret = events[new Random(station.hashCode()).nextInt(events.length)];
 
         Bundle args = new Bundle();
         args.putSerializable("event", ret);
-        args.putString("stationName", stationName);
+        args.putString("stationName", station.Name);
 
         EventDialog dialog = new EventDialog();
         dialog.setArguments(args);

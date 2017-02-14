@@ -147,7 +147,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                         //マップの移動
                         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latlng, 13));
 
-                        int change = HitPointEvent.eventOccurs(station.ResultSet.Point.Station.Name, MainActivity.this);
+                        int change = HitPointEvent.eventOccurs(station.ResultSet.Point.Station, MainActivity.this);
                         hp += change;
                         updateHpTextView();
                     }
@@ -214,7 +214,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                         //マップの移動
                         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latlng, 13));
 
-                        int change = HitPointEvent.eventOccurs(station.ResultSet.Point.Station.Name, MainActivity.this);
+                        int change = HitPointEvent.eventOccurs(station.ResultSet.Point.Station, MainActivity.this);
                         hp += change;
                         updateHpTextView();
                     }
@@ -281,7 +281,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                         //マップの移動
                         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latlng, 13));
 
-                        int change = HitPointEvent.eventOccurs(station.ResultSet.Point.Station.Name, MainActivity.this);
+                        int change = HitPointEvent.eventOccurs(station.ResultSet.Point.Station, MainActivity.this);
                         hp += change;
                         updateHpTextView();
                     }
