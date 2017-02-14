@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             dialog.setCanceledOnTouchOutside(false);
             dialog.show();
         } else {
-            hpText.setText(String.valueOf(hp));
+            hpText.setText("HP: " + String.valueOf(hp));
         }
     }
 
@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         // TextView
         // HP Text
         hpText = (TextView) findViewById(R.id.hp_text);
-        hpText.setText(String.valueOf(hp));
+        updateHpTextView();
 
 
         EkiSpertCommunitator communitator = new EkiSpertCommunitator(MainActivity.this);
