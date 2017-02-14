@@ -45,10 +45,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private float lat;
     private LatLng latlng;
     private int k;//検索結果のヒット数
-    
+
     private void updateHpTextView() {
         if (hp <= 0) {
-            new AlertDialog.Builder(this)
+            AlertDialog dialog = new AlertDialog.Builder(this)
                     .setTitle("ゲームオーバー")
                     .setMessage("あなたは東京の闇に飲まれました……。\nアプリを終了します。")
                     .setPositiveButton("さようなら", new DialogInterface.OnClickListener() {
@@ -58,7 +58,11 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                             finish();
                         }
                     })
-                    .show();
+                    .setCancelable(false)
+                    .create();
+            dialog.setCancelable(false);
+            dialog.setCanceledOnTouchOutside(false);
+            dialog.show();
         } else {
             hpText.setText(String.valueOf(hp));
         }
