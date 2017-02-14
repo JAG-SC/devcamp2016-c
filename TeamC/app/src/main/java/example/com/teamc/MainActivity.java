@@ -48,6 +48,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private int stock[] = new int[3];
     private boolean flag;
 
+    private void updateHpTextView() {
+        hpText.setText(String.valueOf(hp));
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -126,6 +130,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                         latlng = new LatLng(lat, lon);
                         //マップの移動
                         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latlng, 13));
+
+                        int change = HitPointEvent.eventOccurs(station.ResultSet.Point.Station.Name, MainActivity.this);
+                        hp += change;
+                        updateHpTextView();
                     }
 
                     @Override
@@ -189,6 +197,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                         latlng = new LatLng(lat, lon);
                         //マップの移動
                         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latlng, 13));
+
+                        int change = HitPointEvent.eventOccurs(station.ResultSet.Point.Station.Name, MainActivity.this);
+                        hp += change;
+                        updateHpTextView();
                     }
 
                     @Override
@@ -252,6 +264,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                         latlng = new LatLng(lat, lon);
                         //マップの移動
                         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latlng, 13));
+
+                        int change = HitPointEvent.eventOccurs(station.ResultSet.Point.Station.Name, MainActivity.this);
+                        hp += change;
+                        updateHpTextView();
                     }
 
                     @Override
