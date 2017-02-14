@@ -3,6 +3,7 @@ package example.com.teamc;
 import android.content.Context;
 
 import example.com.teamc.resp.Range;
+import example.com.teamc.resp.StationResp;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -23,7 +24,7 @@ public class EkiSpertCommunitator {
         this.key = context.getString(R.string.ekispert_key);
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://api.ekispert.jp/v1/json/search/")
+                .baseUrl("https://api.ekispert.jp/v1/json/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         service = retrofit.create(EkiSpertService.class);
@@ -69,12 +70,36 @@ public class EkiSpertCommunitator {
         void onFailure(Throwable throwable);
     }
 
+    public void station(int code, final StationListener listener) {
+        service.station(key, code).enqueue(new Callback<StationResp>() {
+            @Override
+            public void onResponse(Call<StationResp> call, Response<StationResp> response) {
+                listener.onResponse(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<StationResp> call, Throwable t) {
+                listener.onFailure(t);
+            }
+        });
+    }
+
+    public interface StationListener {
+        void onResponse(StationResp station);
+
+        void onFailure(Throwable throwable);
+    }
+
+
     private interface EkiSpertService {
-        @GET("range")
+        @GET("search/range")
         Call<Range> range(@Query("key") String key, @Query("upperLimit") int upperLimit,
                           @Query("name") String name, @Query("limit") int limit);
 
-        @GET("course/plain")
+        @GET("search/course/plain")
         Call<Range> course_plain(@Query("key") String key, @Query("from") String from, @Query("to") String to);
+
+        @GET("station")
+        Call<StationResp> station(@Query("key") String key, @Query("code") int code);
     }
 }
