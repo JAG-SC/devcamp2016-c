@@ -2,6 +2,7 @@ package example.com.teamc;
 
 import android.content.Context;
 
+import example.com.teamc.resp.CoursePlain;
 import example.com.teamc.resp.Range;
 import example.com.teamc.resp.StationResp;
 import retrofit2.Call;
@@ -51,21 +52,21 @@ public class EkiSpertCommunitator {
     }
 
     public void course_plain(String name, String to, final CoursePlainListener listener) {
-        service.course_plain(key, name, to).enqueue(new Callback<Range>() {
+        service.course_plain(key, name, to).enqueue(new Callback<CoursePlain>() {
             @Override
-            public void onResponse(Call<Range> call, Response<Range> response) {
+            public void onResponse(Call<CoursePlain> call, Response<CoursePlain> response) {
                 listener.onResponse(response.body());
             }
 
             @Override
-            public void onFailure(Call<Range> call, Throwable t) {
+            public void onFailure(Call<CoursePlain> call, Throwable t) {
                 listener.onFailure(t);
             }
         });
     }
 
     public interface CoursePlainListener {
-        void onResponse(Range range);
+        void onResponse(CoursePlain coursePlain);
 
         void onFailure(Throwable throwable);
     }
@@ -97,7 +98,7 @@ public class EkiSpertCommunitator {
                           @Query("name") String name, @Query("limit") int limit);
 
         @GET("search/course/plain")
-        Call<Range> course_plain(@Query("key") String key, @Query("from") String from, @Query("to") String to);
+        Call<CoursePlain> course_plain(@Query("key") String key, @Query("from") String from, @Query("to") String to);
 
         @GET("station")
         Call<StationResp> station(@Query("key") String key, @Query("code") int code);
