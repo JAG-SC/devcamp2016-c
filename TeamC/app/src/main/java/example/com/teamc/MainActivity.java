@@ -43,6 +43,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private int citycode3;
     private float lon;
     private float lat;
+    private float londiff = 0.003128f;
+    private float latdiff = -0.003128f;
     private LatLng latlng;
     //private int k;//検索結果のヒット数
 
@@ -157,9 +159,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 //Toast.makeText(getApplicationContext(), "タップ位置\n緯度：" + latLng.latitude + "\n経度:" + latLng.longitude, Toast.LENGTH_LONG).show();
 
                 // Add a marker in Sydney and move the camera
-                LatLng sydney = new LatLng(latLng.latitude, latLng.longitude);
-                mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-                mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+                //LatLng sydney = new LatLng(latLng.latitude, latLng.longitude);
+                //mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+                //mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
 
                 EkispertWrapper ek = new EkispertWrapper();
                 ek.execute();
@@ -171,10 +173,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         //LatLng sydney = new LatLng(-34, 151);
         //tokyoの座標　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
         //latlng = new LatLng(35.678083, 139.770444);
-        latlng = new LatLng(35.680871, 139.767513);
+        latlng = new LatLng(35.681211, 139.767266);
         // mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
         //mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latlng, 13));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latlng, 14));
     }
 
     @Override
@@ -207,8 +209,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     @Override
                     public void onResponse(StationResp station) {
                         //緯度と経度を取得
-                        lat = Float.valueOf(station.ResultSet.Point.GeoPoint.lati_d);
-                        lon = Float.valueOf(station.ResultSet.Point.GeoPoint.longi_d);
+                        lat = Float.valueOf(station.ResultSet.Point.GeoPoint.lati_d)-latdiff;
+                        lon = Float.valueOf(station.ResultSet.Point.GeoPoint.longi_d)-londiff;
                         latlng = new LatLng(lat, lon);
                         //マップの移動
                         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latlng, mMap.getCameraPosition().zoom));
