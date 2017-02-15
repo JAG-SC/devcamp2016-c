@@ -44,8 +44,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/hp_text"
         android:text="(駅候補1の名前をここへ)"
-        android:alpha="1"
+        android:alpha="0.6"
         android:scaleType="center" />
+
 
     <Button
         android:id="@+id/second_choice_button"
@@ -53,7 +54,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/first_choice_button"
         android:text="(駅候補2の名前をここへ)"
-        android:alpha="1"
+        android:alpha="0.6"
         android:scaleType="center" />
 
     <Button
@@ -62,7 +63,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/second_choice_button"
         android:text="(駅候補3の名前をここへ)"
-        android:alpha="1"
+        android:alpha="0.6"
         android:scaleType="center" />
 
 </RelativeLayout>
