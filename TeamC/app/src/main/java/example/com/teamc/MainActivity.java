@@ -27,7 +27,7 @@ import example.com.teamc.resp.Range;
 import example.com.teamc.resp.StationResp;
 
 
-public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class MainActivity extends AppCompatActivity implements OnMapReadyCallback, View.OnClickListener {
 
     static String str;
     private GoogleMap mMap;
@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private float lon;
     private float lat;
     private LatLng latlng;
-    private int k;//検索結果のヒット数
+    //private int k;//検索結果のヒット数
 
     private void updateHpTextView() {
         if (hp <= 0) {
@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             public void onResponse(Range range) {
                 //Toast.makeText(MainActivity.this, "" + range.ResultSet.Point[0].Station.Name, Toast.LENGTH_LONG).show(); // <- ここは用途によって変えてください
                 //1～3のボタンに取得した都市名を代入
-                k = range.ResultSet.Point.length;
+                int k = range.ResultSet.Point.length;
 
                 List<Integer> ijl = new ArrayList<Integer>();
                 while (ijl.size() < 3) {
@@ -127,209 +127,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         });
 
-
-        // リスナーをボタンに登録
-        firstChoiceButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Buttonの名前(都市名)をcitynameに代入
-                cityname = String.valueOf(firstChoiceButton.getText());
-                EkiSpertCommunitator communitator = new EkiSpertCommunitator(MainActivity.this);
-
-                //stationAPIを使用して新しく取得した都市名の座標に地図を移動
-                communitator.station(citycode1, new EkiSpertCommunitator.StationListener() {
-                    @Override
-                    public void onResponse(StationResp station) {
-                        //緯度と経度を取得
-                        lat = Float.valueOf(station.ResultSet.Point.GeoPoint.lati_d);
-                        lon = Float.valueOf(station.ResultSet.Point.GeoPoint.longi_d);
-                        latlng = new LatLng(lat, lon);
-                        //マップの移動
-                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latlng, 13));
-
-                        int change = HitPointEvent.eventOccurs(station.ResultSet.Point.Station, MainActivity.this);
-                        hp += change;
-                        updateHpTextView();
-                    }
-
-                    @Override
-                    public void onFailure(Throwable throwable) {
-
-                    }
-                });
-
-                //rangeAPIを使用して値を取得
-                communitator.range(20, cityname, 5, new EkiSpertCommunitator.RangeListener() {
-                    @Override
-                    public void onResponse(Range range) {
-                        //Toast.makeText(MainActivity.this, "" + range.ResultSet.Point[0].Station.Name, Toast.LENGTH_LONG).show(); // <- ここは用途によって変えてください
-                        //1～3のボタンに取得した都市名を代入
-                        k = range.ResultSet.Point.length;
-
-                        List<Integer> ijl = new ArrayList<Integer>();
-                        while (ijl.size() < 3) {
-                            int tmp = new Random().nextInt(k);
-                            if (!ijl.contains(tmp)) {
-                                ijl.add(tmp);
-                            }
-                        }
-                        int i = ijl.get(0);
-                        int j = ijl.get(1);
-                        int l = ijl.get(2);
-                        firstChoiceButton.setText(range.ResultSet.Point[i].Station.Name);
-                        citycode1 = Integer.valueOf(range.ResultSet.Point[i].Station.code);
-
-                        secondChoiceButton.setText(range.ResultSet.Point[j].Station.Name);
-                        citycode2 = Integer.valueOf(range.ResultSet.Point[j].Station.code);
-
-                        thirdChoiceButton.setText(range.ResultSet.Point[l].Station.Name);
-                        citycode3 = Integer.valueOf(range.ResultSet.Point[l].Station.code);
-                    }
-
-                    @Override
-                    public void onFailure(Throwable throwable) {
-                        Log.e("onFailure", throwable.getMessage());
-                    }
-
-                });
-            }
-        });
-
-
-        secondChoiceButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Buttonの名前(都市名)をcitynameに代入
-                cityname = String.valueOf(firstChoiceButton.getText());
-                EkiSpertCommunitator communitator = new EkiSpertCommunitator(MainActivity.this);
-
-                //stationAPIを使用して新しく取得した都市名の座標に地図を移動
-                communitator.station(citycode2, new EkiSpertCommunitator.StationListener() {
-                    @Override
-                    public void onResponse(StationResp station) {
-                        //緯度と経度を取得
-                        lat = Float.valueOf(station.ResultSet.Point.GeoPoint.lati_d);
-                        lon = Float.valueOf(station.ResultSet.Point.GeoPoint.longi_d);
-                        latlng = new LatLng(lat, lon);
-                        //マップの移動
-                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latlng, 13));
-
-                        int change = HitPointEvent.eventOccurs(station.ResultSet.Point.Station, MainActivity.this);
-                        hp += change;
-                        updateHpTextView();
-                    }
-
-                    @Override
-                    public void onFailure(Throwable throwable) {
-
-                    }
-                });
-
-                //rangeAPIを使用して値を取得
-                communitator.range(20, cityname, 5, new EkiSpertCommunitator.RangeListener() {
-                    @Override
-                    public void onResponse(Range range) {
-                        //Toast.makeText(MainActivity.this, "" + range.ResultSet.Point[0].Station.Name, Toast.LENGTH_LONG).show(); // <- ここは用途によって変えてください
-                        //1～3のボタンに取得した都市名を代入
-                        k = range.ResultSet.Point.length;
-
-                        List<Integer> ijl = new ArrayList<Integer>();
-                        while (ijl.size() < 3) {
-                            int tmp = new Random().nextInt(k);
-                            if (!ijl.contains(tmp)) {
-                                ijl.add(tmp);
-                            }
-                        }
-                        int i = ijl.get(0);
-                        int j = ijl.get(1);
-                        int l = ijl.get(2);
-                        firstChoiceButton.setText(range.ResultSet.Point[i].Station.Name);
-                        citycode1 = Integer.valueOf(range.ResultSet.Point[i].Station.code);
-
-                        secondChoiceButton.setText(range.ResultSet.Point[j].Station.Name);
-                        citycode2 = Integer.valueOf(range.ResultSet.Point[j].Station.code);
-
-                        thirdChoiceButton.setText(range.ResultSet.Point[l].Station.Name);
-                        citycode3 = Integer.valueOf(range.ResultSet.Point[l].Station.code);
-                    }
-
-                    @Override
-                    public void onFailure(Throwable throwable) {
-                        Log.e("onFailure", throwable.getMessage());
-                    }
-
-                });
-            }
-        });
-
-
-        thirdChoiceButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Buttonの名前(都市名)をcitynameに代入
-                cityname = String.valueOf(firstChoiceButton.getText());
-                EkiSpertCommunitator communitator = new EkiSpertCommunitator(MainActivity.this);
-
-                //stationAPIを使用して新しく取得した都市名の座標に地図を移動
-                communitator.station(citycode3, new EkiSpertCommunitator.StationListener() {
-                    @Override
-                    public void onResponse(StationResp station) {
-                        //緯度と経度を取得
-                        lat = Float.valueOf(station.ResultSet.Point.GeoPoint.lati_d);
-                        lon = Float.valueOf(station.ResultSet.Point.GeoPoint.longi_d);
-                        latlng = new LatLng(lat, lon);
-                        //マップの移動
-                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latlng, 13));
-
-                        int change = HitPointEvent.eventOccurs(station.ResultSet.Point.Station, MainActivity.this);
-                        hp += change;
-                        updateHpTextView();
-                    }
-
-                    @Override
-                    public void onFailure(Throwable throwable) {
-
-                    }
-                });
-
-                //rangeAPIを使用して値を取得
-                communitator.range(20, cityname, 5, new EkiSpertCommunitator.RangeListener() {
-                    @Override
-                    public void onResponse(Range range) {
-                        //Toast.makeText(MainActivity.this, "" + range.ResultSet.Point[0].Station.Name, Toast.LENGTH_LONG).show(); // <- ここは用途によって変えてください
-                        //1～3のボタンに取得した都市名を代入
-                        k = range.ResultSet.Point.length;
-
-                        List<Integer> ijl = new ArrayList<Integer>();
-                        while (ijl.size() < 3) {
-                            int tmp = new Random().nextInt(k);
-                            if (!ijl.contains(tmp)) {
-                                ijl.add(tmp);
-                            }
-                        }
-                        int i = ijl.get(0);
-                        int j = ijl.get(1);
-                        int l = ijl.get(2);
-
-                        firstChoiceButton.setText(range.ResultSet.Point[i].Station.Name);
-                        citycode1 = Integer.valueOf(range.ResultSet.Point[i].Station.code);
-
-                        secondChoiceButton.setText(range.ResultSet.Point[j].Station.Name);
-                        citycode2 = Integer.valueOf(range.ResultSet.Point[j].Station.code);
-
-                        thirdChoiceButton.setText(range.ResultSet.Point[l].Station.Name);
-                        citycode3 = Integer.valueOf(range.ResultSet.Point[l].Station.code);
-                    }
-
-                    @Override
-                    public void onFailure(Throwable throwable) {
-                        Log.e("onFailure", throwable.getMessage());
-                    }
-
-                });
-            }
-        });
-
+        firstChoiceButton.setOnClickListener(this);
+        secondChoiceButton.setOnClickListener(this);
+        thirdChoiceButton.setOnClickListener(this);
     }
 
 
@@ -365,9 +165,97 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         // Add a marker in Sydney and move the camera
         //LatLng sydney = new LatLng(-34, 151);
         //tokyoの座標　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
-        latlng = new LatLng(35.678083, 139.770444);
+        //latlng = new LatLng(35.678083, 139.770444);
+        latlng = new LatLng(35.680871, 139.767513);
         // mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
         //mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latlng, 13));
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.first_choice_button:
+            case R.id.second_choice_button:
+            case R.id.third_choice_button: {
+                //Buttonの名前(都市名)をcitynameに代入
+                cityname = String.valueOf(((Button) v).getText());
+                EkiSpertCommunitator communitator = new EkiSpertCommunitator(MainActivity.this);
+
+                //stationAPIを使用して新しく取得した都市名の座標に地図を移動
+                final int code;
+                switch (v.getId()) {
+                    case R.id.first_choice_button:
+                        code = citycode1;
+                        break;
+                    case R.id.second_choice_button:
+                        code = citycode2;
+                        break;
+                    case R.id.third_choice_button:
+                        code = citycode3;
+                        break;
+                    default:
+                        throw new IllegalStateException("bug");
+                }
+
+                communitator.station(code, new EkiSpertCommunitator.StationListener() {
+                    @Override
+                    public void onResponse(StationResp station) {
+                        //緯度と経度を取得
+                        lat = Float.valueOf(station.ResultSet.Point.GeoPoint.lati_d);
+                        lon = Float.valueOf(station.ResultSet.Point.GeoPoint.longi_d);
+                        latlng = new LatLng(lat, lon);
+                        //マップの移動
+                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latlng, mMap.getCameraPosition().zoom));
+
+                        int change = HitPointEvent.eventOccurs(station.ResultSet.Point.Station, MainActivity.this);
+                        hp += change;
+                        updateHpTextView();
+                    }
+
+                    @Override
+                    public void onFailure(Throwable throwable) {
+
+                    }
+                });
+
+                //rangeAPIを使用して値を取得
+                communitator.range(20, cityname, 5, new EkiSpertCommunitator.RangeListener() {
+                    @Override
+                    public void onResponse(Range range) {
+                        //Toast.makeText(MainActivity.this, "" + range.ResultSet.Point[0].Station.Name, Toast.LENGTH_LONG).show(); // <- ここは用途によって変えてください
+                        //1～3のボタンに取得した都市名を代入
+                        int k = range.ResultSet.Point.length;
+
+                        List<Integer> ijl = new ArrayList<Integer>();
+                        while (ijl.size() < 3) {
+                            int tmp = new Random().nextInt(k);
+                            if (!ijl.contains(tmp)) {
+                                ijl.add(tmp);
+                            }
+                        }
+                        int i = ijl.get(0);
+                        int j = ijl.get(1);
+                        int l = ijl.get(2);
+
+                        firstChoiceButton.setText(range.ResultSet.Point[i].Station.Name);
+                        citycode1 = Integer.valueOf(range.ResultSet.Point[i].Station.code);
+
+                        secondChoiceButton.setText(range.ResultSet.Point[j].Station.Name);
+                        citycode2 = Integer.valueOf(range.ResultSet.Point[j].Station.code);
+
+                        thirdChoiceButton.setText(range.ResultSet.Point[l].Station.Name);
+                        citycode3 = Integer.valueOf(range.ResultSet.Point[l].Station.code);
+                    }
+
+                    @Override
+                    public void onFailure(Throwable throwable) {
+                        Log.e("onFailure", throwable.getMessage());
+                    }
+
+                });
+                break;
+            }
+        }
     }
 }
