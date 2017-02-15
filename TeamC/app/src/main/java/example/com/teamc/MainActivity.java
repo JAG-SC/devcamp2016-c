@@ -46,6 +46,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private LatLng latlng;
     //private int k;//検索結果のヒット数
 
+    private int maxHp = hp;
+
     private void updateHpTextView() {
         if (hp <= 0) {
             AlertDialog dialog = new AlertDialog.Builder(this)
@@ -54,7 +56,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     .setPositiveButton("さようなら", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
+                            ScoreCommunicator.registrank("kimura", maxHp);
+                            Toast.makeText(MainActivity.this, "ランキング登録しました。スコア:" + maxHp, Toast.LENGTH_LONG).show();
                             Toast.makeText(MainActivity.this, "バイバイ", Toast.LENGTH_LONG).show();
+
                             finish();
                         }
                     })
@@ -210,6 +215,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                         int change = HitPointEvent.eventOccurs(station.ResultSet.Point.Station, MainActivity.this);
                         hp += change;
+
+                        maxHp = Math.max(maxHp, hp);
+
                         updateHpTextView();
                     }
 
