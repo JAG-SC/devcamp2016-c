@@ -141,7 +141,18 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             public void onFailure(Throwable throwable) {
                 Log.e("onFailure", throwable.getMessage());
             }
+        });
 
+        communitator.station(cityname, new EkiSpertCommunitator.StationListener() {
+            @Override
+            public void onResponse(StationResp station) {
+                // TODO: 2017/02/25 外丸さん 
+            }
+
+            @Override
+            public void onFailure(Throwable throwable) {
+                Log.e("onFailure", throwable.getMessage());
+            }
         });
 
         firstChoiceButton.setOnClickListener(this);
