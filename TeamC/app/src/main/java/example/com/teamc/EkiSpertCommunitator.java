@@ -85,6 +85,20 @@ public class EkiSpertCommunitator {
         });
     }
 
+    public void station(String name, final StationListener listener) {
+        service.station(key, name).enqueue(new Callback<StationResp>() {
+            @Override
+            public void onResponse(Call<StationResp> call, Response<StationResp> response) {
+              listener.onResponse(response.body());
+            }
+
+          @Override
+          public void onFailure(Call<StationResp> call, Throwable t) {
+            listener.onFailure(t);
+          }
+        });
+    }
+
     public interface StationListener {
         void onResponse(StationResp station);
 
@@ -102,5 +116,8 @@ public class EkiSpertCommunitator {
 
         @GET("station")
         Call<StationResp> station(@Query("key") String key, @Query("code") int code);
+
+        @GET("station")
+        Call<StationResp> station(@Query("key") String key, @Query("name") String name);
     }
 }
