@@ -1,6 +1,7 @@
 package example.com.teamc;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -34,7 +35,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private TextView hpText;    //プレイヤーHP表示
     private int hp = 50;
-    private String cityname = "東京";
+    private String cityname="東京";
+    private int stationtime = 20;
+    private String time;
     private Button firstChoiceButton;
     private Button secondChoiceButton;
     private Button thirdChoiceButton;
@@ -49,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     //private int k;//検索結果のヒット数
 
     private int maxHp = hp;
+
 
     private void updateHpTextView() {
         if (hp <= 0) {
@@ -77,6 +81,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
@@ -98,9 +103,14 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         hpText = (TextView) findViewById(R.id.hp_text);
         updateHpTextView();
 
+        //Intentでデータを受け取る
+        Intent intent = getIntent();
+        cityname = intent.getStringExtra("SName");
+        //time = intent.getStringExtra("Stime");
+        //stationtime = Integer.parseInt(time);
 
         EkiSpertCommunitator communitator = new EkiSpertCommunitator(MainActivity.this);
-        communitator.range(20, cityname, 5, new EkiSpertCommunitator.RangeListener() {
+        communitator.range(stationtime, cityname, 5, new EkiSpertCommunitator.RangeListener() {
             @Override
             public void onResponse(Range range) {
                 //Toast.makeText(MainActivity.this, "" + range.ResultSet.Point[0].Station.Name, Toast.LENGTH_LONG).show(); // <- ここは用途によって変えてください
@@ -230,7 +240,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 });
 
                 //rangeAPIを使用して値を取得
-                communitator.range(20, cityname, 5, new EkiSpertCommunitator.RangeListener() {
+                communitator.range(stationtime, cityname, 5, new EkiSpertCommunitator.RangeListener() {
                     @Override
                     public void onResponse(Range range) {
                         //Toast.makeText(MainActivity.this, "" + range.ResultSet.Point[0].Station.Name, Toast.LENGTH_LONG).show(); // <- ここは用途によって変えてください
