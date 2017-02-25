@@ -13,6 +13,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 /**
  * Created by ayijk on 2017/02/14.
  */
@@ -86,17 +89,21 @@ public class EkiSpertCommunitator {
     }
 
     public void station(String name, final StationListener listener) {
-        service.station(key, name).enqueue(new Callback<StationResp>() {
-            @Override
-            public void onResponse(Call<StationResp> call, Response<StationResp> response) {
-              listener.onResponse(response.body());
-            }
+        try {
+            service.station(key, URLEncoder.encode(name, "UTF-8")).enqueue(new Callback<StationResp>() {
+                @Override
+                public void onResponse(Call<StationResp> call, Response<StationResp> response) {
+                    listener.onResponse(response.body());
+                }
 
-          @Override
-          public void onFailure(Call<StationResp> call, Throwable t) {
-            listener.onFailure(t);
-          }
-        });
+                @Override
+                public void onFailure(Call<StationResp> call, Throwable t) {
+                    listener.onFailure(t);
+                }
+            });
+        } catch (UnsupportedEncodingException e) {
+            throw new IllegalStateException(e);
+        }
     }
 
     public interface StationListener {
