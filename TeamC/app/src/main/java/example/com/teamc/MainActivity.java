@@ -194,8 +194,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         });
 
-        lat=Float.valueOf(151);
-        lon=Float.valueOf(45);
+        //lat=Float.valueOf(151);
+        //lon=Float.valueOf(45);
 
 
         // Add a marker in Sydney and move the camera
