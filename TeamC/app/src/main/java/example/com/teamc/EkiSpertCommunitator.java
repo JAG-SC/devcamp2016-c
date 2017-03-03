@@ -1,10 +1,10 @@
 package example.com.teamc;
 
 import android.content.Context;
-
 import example.com.teamc.resp.CoursePlain;
 import example.com.teamc.resp.Range;
 import example.com.teamc.resp.StationResp;
+import example.com.teamc.resp.StationWithNameResp;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -12,9 +12,6 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
-
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 
 /**
  * Created by ayijk on 2017/02/14.
@@ -88,22 +85,18 @@ public class EkiSpertCommunitator {
         });
     }
 
-    public void station(String name, final StationListener listener) {
-        try {
-            service.station(key, URLEncoder.encode(name, "UTF-8")).enqueue(new Callback<StationResp>() {
-                @Override
-                public void onResponse(Call<StationResp> call, Response<StationResp> response) {
-                    listener.onResponse(response.body());
-                }
+    public void station(String name, final StationWithNameListener listener) {
+        service.station(key, name).enqueue(new Callback<StationWithNameResp>() {
+            @Override
+            public void onResponse(Call<StationWithNameResp> call, Response<StationWithNameResp> response) {
+                listener.onResponse(response.body());
+            }
 
-                @Override
-                public void onFailure(Call<StationResp> call, Throwable t) {
-                    listener.onFailure(t);
-                }
-            });
-        } catch (UnsupportedEncodingException e) {
-            throw new IllegalStateException(e);
-        }
+            @Override
+                public void onFailure(Call<StationWithNameResp> call, Throwable t) {
+                listener.onFailure(t);
+            }
+        });
     }
 
     public interface StationListener {
@@ -112,6 +105,11 @@ public class EkiSpertCommunitator {
         void onFailure(Throwable throwable);
     }
 
+    public interface StationWithNameListener {
+        void onResponse(StationWithNameResp station);
+
+        void onFailure(Throwable throwable);
+    }
 
     private interface EkiSpertService {
         @GET("search/range")
@@ -125,6 +123,6 @@ public class EkiSpertCommunitator {
         Call<StationResp> station(@Query("key") String key, @Query("code") int code);
 
         @GET("station")
-        Call<StationResp> station(@Query("key") String key, @Query("name") String name);
+        Call<StationWithNameResp> station(@Query("key") String key, @Query("name") String name);
     }
 }

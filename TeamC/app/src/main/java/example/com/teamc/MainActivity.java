@@ -11,22 +11,19 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
+import example.com.teamc.resp.Range;
+import example.com.teamc.resp.StationResp;
+import example.com.teamc.resp.StationWithNameResp;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
-import example.com.teamc.resp.Range;
-import example.com.teamc.resp.StationResp;
-
 
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback, View.OnClickListener {
 
@@ -144,13 +141,16 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         });
 
 
-        communitator.station(cityname, new EkiSpertCommunitator.StationListener() {
+        communitator.station(cityname, new EkiSpertCommunitator.StationWithNameListener() {
             @Override
-            public void onResponse(StationResp station) {
+            public void onResponse(StationWithNameResp station) {
                 // TODO: 2017/02/25 外丸さん
-                //問題の場所
-                lat = Float.valueOf(station.ResultSet.Point.GeoPoint.lati_d)-latdiff;
-                lon = Float.valueOf(station.ResultSet.Point.GeoPoint.longi_d)-londiff;
+                //問題の場所 ← 解決しました
+                lat = Float.valueOf(station.ResultSet.Point.get(0).GeoPoint.lati_d)-latdiff;
+                lon = Float.valueOf(station.ResultSet.Point.get(0).GeoPoint.longi_d)-londiff;
+                latlng = new LatLng(lat, lon);
+                Log.d("latlon", latlng.toString());
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latlng, 14));
             }
 
             @Override
@@ -202,10 +202,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         //LatLng sydney = new LatLng(-34, 151);
         //tokyoの座標　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
         //latlng = new LatLng(35.678083, 139.770444);
-        latlng = new LatLng(lat,lon);
+        //latlng = new LatLng(lat,lon);
         // mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
         //mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latlng, 14));
+        //mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latlng, 14));
     }
 
     @Override
