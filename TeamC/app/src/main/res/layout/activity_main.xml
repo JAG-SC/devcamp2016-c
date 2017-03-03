@@ -18,8 +18,7 @@
     android:name="com.google.android.gms.maps.SupportMapFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="example.com.teamc.MainActivity"
-    tools:layout="@layout/activity_main"/>
+    tools:context="example.com.teamc.MainActivity" />
 
     <ImageView
         android:id="@+id/image_player"
