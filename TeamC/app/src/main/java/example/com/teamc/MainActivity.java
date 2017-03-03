@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private GoogleMap mMap;
 
     private TextView hpText;    //プレイヤーHP表示
+    private TextView currentLocText;  //プレイヤーの現在地
     private int hp = 50;
     private String cityname="東京";
     private int stationtime = 20;
@@ -76,6 +77,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             dialog.show();
         } else {
             hpText.setText("HP: " + String.valueOf(hp));
+            currentLocText.setText("現在地: " + String.valueOf(cityname));
         }
     }
 
@@ -101,6 +103,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         // TextView
         // HP Text
         hpText = (TextView) findViewById(R.id.hp_text);
+        // Current Location Text
+        currentLocText = (TextView) findViewById(R.id.current_loc_text);
         updateHpTextView();
 
         //Intentでデータを受け取る

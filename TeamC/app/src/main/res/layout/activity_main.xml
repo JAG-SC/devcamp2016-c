@@ -38,6 +38,17 @@
         android:padding="12dip"
         android:scaleType="center"/>
 
+    <TextView
+        android:id="@+id/current_loc_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/White"
+        android:textSize="16sp"
+        android:layout_alignParentLeft="true"
+        android:layout_margin="6dip"
+        android:padding="12dip"
+        android:scaleType="center"/>
+
     <Button
         android:id="@+id/first_choice_button"
         android:layout_width="match_parent"
