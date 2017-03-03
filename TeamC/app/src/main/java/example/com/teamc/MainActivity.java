@@ -143,10 +143,14 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         });
 
+
         communitator.station(cityname, new EkiSpertCommunitator.StationListener() {
             @Override
             public void onResponse(StationResp station) {
-                // TODO: 2017/02/25 外丸さん 
+                // TODO: 2017/02/25 外丸さん
+                //問題の場所
+                lat = Float.valueOf(station.ResultSet.Point.GeoPoint.lati_d)-latdiff;
+                lon = Float.valueOf(station.ResultSet.Point.GeoPoint.longi_d)-londiff;
             }
 
             @Override
@@ -158,6 +162,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         firstChoiceButton.setOnClickListener(this);
         secondChoiceButton.setOnClickListener(this);
         thirdChoiceButton.setOnClickListener(this);
+
     }
 
 
@@ -173,7 +178,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
         mMap.setOnMapClickListener(new OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
@@ -190,11 +194,15 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         });
 
+        lat=Float.valueOf(151);
+        lon=Float.valueOf(45);
+
+
         // Add a marker in Sydney and move the camera
         //LatLng sydney = new LatLng(-34, 151);
         //tokyoの座標　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
         //latlng = new LatLng(35.678083, 139.770444);
-        latlng = new LatLng(35.681211, 139.767266);
+        latlng = new LatLng(lat,lon);
         // mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
         //mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latlng, 14));
