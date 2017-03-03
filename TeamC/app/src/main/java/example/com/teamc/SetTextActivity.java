@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class SetText extends AppCompatActivity implements View.OnClickListener {
+public class SetTextActivity extends AppCompatActivity implements View.OnClickListener {
     private Button start;
     public String station_name;
     public String station_time;
@@ -35,6 +35,7 @@ public class SetText extends AppCompatActivity implements View.OnClickListener {
 
                 Intent intent = new Intent(this, MainActivity.class);
                 intent.putExtra("SName", station_name);
+
                 //intent.putExtra("Stime", station_time);
                 Log.d("TAG0",station_name);
 
