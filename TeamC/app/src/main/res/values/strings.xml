@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">TeamC</string>
     <string name="title_activity_maps">Map</string>
+    <string name="ekispert_key">AIzaSyArgNaVIi4ebxmBmTUdeofR4itOVtHzXBc</string>
 </resources>

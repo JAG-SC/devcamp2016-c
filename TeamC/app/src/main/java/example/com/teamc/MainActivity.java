@@ -7,8 +7,12 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -20,6 +24,7 @@ import com.google.android.gms.maps.model.LatLng;
 import example.com.teamc.resp.Range;
 import example.com.teamc.resp.StationResp;
 import example.com.teamc.resp.StationWithNameResp;
+import example.com.teamc.resp.RankTable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,11 +64,43 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     .setPositiveButton("さようなら", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            ScoreCommunicator.registrank("kimura", maxHp);
-                            Toast.makeText(MainActivity.this, "ランキング登録しました。スコア:" + maxHp, Toast.LENGTH_LONG).show();
-                            Toast.makeText(MainActivity.this, "バイバイ", Toast.LENGTH_LONG).show();
 
-                            finish();
+                            final EditText editView = new EditText(MainActivity.this);
+                            new AlertDialog.Builder(MainActivity.this)
+                                    .setIcon(android.R.drawable.ic_dialog_info)
+                                    .setTitle("ユーザ名の登録")
+                                    .setView(editView)
+                                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int whichButton) {
+
+                                            ScoreCommunicator scorecom = new ScoreCommunicator();
+
+                                            scorecom.registrank(editView.getText().toString(), maxHp,new ScoreCommunicator.RegistRankListener(){
+                                                @Override
+                                                public void onResponse(RankTable ranktable) {
+                                                    //TODO:ランキングテーブルが返ってくるので表示をする(要検討)
+
+                                                }
+                                                @Override
+                                                public void onFailure(Throwable throwable) {
+                                                    Log.e("onFailure", throwable.getMessage());
+                                                }
+
+                                            });
+
+                                            //ScoreCommunicator.registrank("kimura", maxHp);
+                                            Toast.makeText(MainActivity.this, "ランキング登録しました。スコア:" + maxHp, Toast.LENGTH_LONG).show();
+                                            Toast.makeText(MainActivity.this, "バイバイ", Toast.LENGTH_LONG).show();
+
+                                            finish();
+                                        }
+                                    })
+                                    .setNegativeButton("キャンセル", new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int whichButton) {
+                                        }
+                                    })
+                                    .show();
+
                         }
                     })
                     .setCancelable(false)
@@ -162,6 +199,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         firstChoiceButton.setOnClickListener(this);
         secondChoiceButton.setOnClickListener(this);
         thirdChoiceButton.setOnClickListener(this);
+
 
     }
 
